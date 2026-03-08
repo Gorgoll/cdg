@@ -1,0 +1,66 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Publish Linux x64
+        run: |
+          dotnet publish cdg/cdg.csproj \
+            -c Release \
+            -r linux-x64 \
+            --self-contained true \
+            -p:PublishSingleFile=true \
+            -o ./out/linux-x64
+          mv ./out/linux-x64/cdg ./out/linux-x64/cdg-linux-x64
+
+      - name: Publish Linux arm64
+        run: |
+          dotnet publish cdg/cdg.csproj \
+            -c Release \
+            -r linux-arm64 \
+            --self-contained true \
+            -p:PublishSingleFile=true \
+            -o ./out/linux-arm64
+          mv ./out/linux-arm64/cdg ./out/linux-arm64/cdg-linux-arm64
+
+      - name: Publish macOS x64
+        run: |
+          dotnet publish cdg/cdg.csproj \
+            -c Release \
+            -r osx-x64 \
+            --self-contained true \
+            -p:PublishSingleFile=true \
+            -o ./out/osx-x64
+          mv ./out/osx-x64/cdg ./out/osx-x64/cdg-macos-x64
+
+      - name: Publish macOS arm64 (Apple Silicon)
+        run: |
+          dotnet publish cdg/cdg.csproj \
+            -c Release \
+            -r osx-arm64 \
+            --self-contained true \
+            -p:PublishSingleFile=true \
+            -o ./out/osx-arm64
+          mv ./out/osx-arm64/cdg ./out/osx-arm64/cdg-macos-arm64
+
+      - name: Upload Release Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ./out/linux-x64/cdg-linux-x64
+            ./out/linux-arm64/cdg-linux-arm64
+            ./out/osx-x64/cdg-macos-x64
+            ./out/osx-arm64/cdg-macos-arm64
