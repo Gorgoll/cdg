@@ -72,7 +72,7 @@ jobs:
           path: ./out/cdg-macos-arm64
 
   release:
-    needs: [build-linux-x64, build-linux-arm64, build-macos-x64, build-macos-arm64]
+    needs: [build-linux-x64, build-linux-arm64, build-macos-arm64]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
@@ -86,5 +86,4 @@ jobs:
           files: |
             ./out/cdg-linux-x64
             ./out/cdg-linux-arm64
-            ./out/cdg-macos-x64
             ./out/cdg-macos-arm64
