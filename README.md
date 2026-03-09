@@ -29,8 +29,8 @@ cdg
 
 - Use arrow keys to navigate
 - Select a folder to enter it
-- Choose `__UP__` to go to the parent directory
-- Choose `__Exit__` to `cd` into the current directory and quit
+- Choose `../` to go to the parent directory
+- Choose `./` to `cd` into the current directory and quit
 
 ---
 

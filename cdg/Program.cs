@@ -38,10 +38,10 @@ class Program
 
         if (parent != null)
         {
-            choices.Add("__UP__");
+            choices.Add("../");
         }
 
-        choices.Add("__Exit__");
+        choices.Add("./");
         choices.AddRange(dirs);
 
         var selection = AnsiConsole.Prompt(
@@ -50,13 +50,13 @@ class Program
                 .PageSize(20)
                 .AddChoices(choices));
 
-        if (selection == "__Exit__")
+        if (selection == "./")
         {
             Console.WriteLine(path);
             return "__EXIT__";
         }
 
-        if (selection == "__UP__")
+        if (selection == "../")
             return parent?.FullName;
 
         return Path.Combine(path, selection);
