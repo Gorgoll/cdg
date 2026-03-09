@@ -50,28 +50,6 @@ jobs:
         with:
           name: cdg-linux-arm64
           path: ./out/cdg-linux-arm64
-
-  build-macos-x64:
-    runs-on: macos-13
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '10.0.x'
-      - name: Publish
-        run: |
-          dotnet publish cdg/cdg.csproj \
-            -c Release \
-            -r osx-x64 \
-            --self-contained true \
-            -p:PublishAot=true \
-            -o ./out
-          mv ./out/cdg ./out/cdg-macos-x64
-      - uses: actions/upload-artifact@v4
-        with:
-          name: cdg-macos-x64
-          path: ./out/cdg-macos-x64
-
   build-macos-arm64:
     runs-on: macos-latest
     steps:
