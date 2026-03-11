@@ -9,13 +9,13 @@ Invoke-WebRequest "https://github.com/Gorgoll/cdg/releases/latest/download/cdg-w
 
 $functionName = "cdg"
 
-$functionCode = @"
+$functionCode = @'
 function cdg {
-    `$dir = (& "$env:LOCALAPPDATA\cdg\cdg.exe").Trim()
+    $dir = (& "`$env:LOCALAPPDATA\cdg\cdg.exe").Trim()
     Write-Host "$dir"
     Set-Location $dir
 }
-"@
+'@
 
 if (!(Test-Path $PROFILE)) {
     New-Item -ItemType File -Path $PROFILE -Force | Out-Null
