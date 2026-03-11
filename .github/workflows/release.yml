@@ -85,7 +85,7 @@ jobs:
             --self-contained true `
             -p:PublishAot=true `
             -o ./out
-          rename ./out/cdg.exe cdg-windows-x64.exe
+          Rename-Item ./out/cdg.exe cdg-windows-x64.exe
       - uses: actions/upload-artifact@v4
         with:
           name: cdg-windows-x64
