@@ -70,9 +70,28 @@ jobs:
         with:
           name: cdg-macos-arm64
           path: ./out/cdg-macos-arm64
-
+  build-windows-x64:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Publish
+        run: |
+          dotnet publish cdg/cdg.csproj `
+            -c Release `
+            -r win-x64 `
+            --self-contained true `
+            -p:PublishAot=true `
+            -o ./out
+          rename ./out/cdg.exe cdg-windows-x64.exe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cdg-windows-x64
+          path: ./out/cdg-windows-x64.exe
   release:
-    needs: [build-linux-x64, build-linux-arm64, build-macos-arm64]
+    needs: [build-linux-x64, build-linux-arm64, build-macos-arm64, build-windows-x64]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
@@ -87,3 +106,4 @@ jobs:
             ./out/cdg-linux-x64
             ./out/cdg-linux-arm64
             ./out/cdg-macos-arm64
+            ./out/cdg-windows-x64.exe
