@@ -98,5 +98,5 @@ source ~/.bashrc
 | Platform | Status |
 |----------|--------|
 | Linux    | ✅ Tested   |
-| Windows  | ⚠️ Untested |
+| Windows  | ✅ Tested   |
 | macOS    | ⚠️ Untested |
