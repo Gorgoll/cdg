@@ -11,7 +11,7 @@ $functionName = "cdg"
 
 $functionCode = @'
 function cdg {
-    $dir = (& "`$env:LOCALAPPDATA\cdg\cdg.exe").Trim()
+    $dir = (& "$env:LOCALAPPDATA\cdg\cdg.exe").Trim()
     Write-Host "$dir"
     Set-Location $dir
 }
