@@ -5,7 +5,7 @@ $exePath = Join-Path $installDir "cdg.exe"
 if (!(Test-Path $installDir)) {
     New-Item -ItemType Directory -Path $installDir | Out-Null
 }
-Invoke-WebRequest "https://github.com/Gorgoll/cdg/releases/latest/download/cdg-windows-x64" -OutFile $file.destination
+Invoke-WebRequest "https://github.com/Gorgoll/cdg/releases/latest/download/cdg-windows-x64.exe" -OutFile $file.destination
 
 $functionName = "cdg"
 
