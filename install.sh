@@ -10,7 +10,7 @@ cdg(){
     dir=$(~/.local/bin/cdg-bin 2>/dev/tty)
     [ -n "$dir" ] && cd "$dir"
 }'
-if grep -q -s "cdg(){" "~/.bashrc" ||  grep -q -s "cdg(){" "~/.zshrc"; then
+if grep -q -s "cdg(){" ~/.bashrc ||  grep -q -s "cdg(){" ~/.zshrc; then
   echo "cdg is already added to your shell config"
 else
   if [ -n "$ZSH_VERSION" ] || [ "$SHELL" = "/bin/zsh" ]; then
