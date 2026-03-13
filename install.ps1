@@ -2,6 +2,7 @@
 $installDir = Join-Path $env:LOCALAPPDATA "cdg"
 $exePath = Join-Path $installDir "cdg.exe"
 
+# install path check
 if (!(Test-Path $installDir)) {
     New-Item -ItemType Directory -Path $installDir | Out-Null
 }
@@ -9,13 +10,14 @@ Invoke-WebRequest "https://github.com/Gorgoll/cdg/releases/latest/download/cdg-w
 
 $functionName = "cdg"
 
+
 $functionCode = @"
 function cdg {
     `$dir = (& "$env:LOCALAPPDATA\cdg\cdg.exe").Trim()
     if (`$dir) { Set-Location `$dir }
 }
 "@
-
+# if profile exist append if not create new one or somthing like that i hate powershell :>
 if (!(Test-Path $PROFILE)) {
     New-Item -ItemType File -Path $PROFILE -Force | Out-Null
 }
