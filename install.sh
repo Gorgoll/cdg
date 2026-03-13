@@ -1,9 +1,9 @@
 #!/bin/bash
-
 mkdir -p ~/.local/bin
 arch=$(uname -m)
 os=$(uname -s)
-# os
+
+# OS
 case "$os" in
     Linux) os="linux" ;;
     Darwin) os="macos" ;;
@@ -12,7 +12,8 @@ case "$os" in
         exit 1
         ;;
 esac
-# cpu architecture
+
+# CPU architecture
 case "$arch" in
     x86_64) arch="x64" ;;
     aarch64|arm64) arch="arm64" ;;
@@ -22,20 +23,42 @@ case "$arch" in
         exit 1
         ;;
 esac
-# install the right version
+
+# Install the right version
 file="cdg-$os-$arch"
 curl -L "https://github.com/Gorgoll/cdg/releases/latest/download/$file" -o ~/.local/bin/cdg-bin
 chmod +x ~/.local/bin/cdg-bin
 
-# function to append
-FUNC='
-cdg(){
+# Functions
+
+# Bash/Zsh
+FUNC='cdg(){
     local dir
     dir=$(~/.local/bin/cdg-bin 2>/dev/tty)
     [ -n "$dir" ] && cd "$dir"
 }'
 
-# bash
+# Fish
+FISH_FUNC='function cdg
+    set dir ( ~/.local/bin/cdg-bin 2>/dev/tty )
+    if test -n "$dir"
+        cd "$dir"
+    end
+end'
+
+# Nushell
+NU_FUNC='def cdg [] {
+    let dir = (~/.local/bin/cdg-bin | str trim)
+    if $dir != "" { cd $dir }
+}'
+
+# Elvish
+ELV_FUNC='fn cdg [] {
+    var dir = ( ~/.local/bin/cdg-bin | str:trim )
+    if $dir != "" { cd $dir }
+}'
+
+# Bash
 if [ -f "$HOME/.bashrc" ]; then
     if ! grep -qs "cdg()" "$HOME/.bashrc"; then
         echo "$FUNC" >> "$HOME/.bashrc"
@@ -45,7 +68,7 @@ if [ -f "$HOME/.bashrc" ]; then
     fi
 fi
 
-# zsh
+# Zsh
 if [ -f "$HOME/.zshrc" ]; then
     if ! grep -qs "cdg()" "$HOME/.zshrc"; then
         echo "$FUNC" >> "$HOME/.zshrc"
@@ -55,7 +78,7 @@ if [ -f "$HOME/.zshrc" ]; then
     fi
 fi
 
-# fish
+# Fish
 if [ -f "$HOME/.config/fish/config.fish" ]; then
     if ! grep -qs "function cdg" "$HOME/.config/fish/config.fish"; then
         echo "$FISH_FUNC" >> "$HOME/.config/fish/config.fish"
@@ -65,7 +88,7 @@ if [ -f "$HOME/.config/fish/config.fish" ]; then
     fi
 fi
 
-# nushell
+# Nushell
 if [ -f "$HOME/.config/nushell/config.nu" ]; then
     if ! grep -qs "def cdg" "$HOME/.config/nushell/config.nu"; then
         echo "$NU_FUNC" >> "$HOME/.config/nushell/config.nu"
@@ -75,7 +98,7 @@ if [ -f "$HOME/.config/nushell/config.nu" ]; then
     fi
 fi
 
-# elvish
+# Elvish
 if [ -f "$HOME/.config/elvish/rc.elv" ]; then
     if ! grep -qs "fn cdg" "$HOME/.config/elvish/rc.elv"; then
         echo "$ELV_FUNC" >> "$HOME/.config/elvish/rc.elv"
