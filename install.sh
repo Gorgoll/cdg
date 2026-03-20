@@ -53,9 +53,9 @@ NU_FUNC='def cdg [] {
 }'
 
 # Elvish
-ELV_FUNC='fn cdg [] {
-    var dir = ( ~/.local/bin/cdg-bin | str:trim )
-    if $dir != "" { cd $dir }
+ELV_FUNC='fn cdg {
+    var dir = ( ~/.local/bin/cdg-bin )
+    if (not-eq $dir "") { cd $dir }
 }'
 
 # Bash
