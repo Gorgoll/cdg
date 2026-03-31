@@ -118,7 +118,7 @@ Example:
             return;
 
         foreach (var line in File.ReadAllLines(file))
-            Console.WriteLine(line);
+            Console.Error.WriteLine(line);
     }
 
     public static string FindBookmark(string key)
