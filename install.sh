@@ -34,27 +34,28 @@ chmod +x ~/.local/bin/cdg-bin
 # Bash/Zsh
 FUNC='cdg(){
     local dir
-    dir=$(~/.local/bin/cdg-bin 2>/dev/tty)
+    dir=$(~/.local/bin/cdg-bin "$@" 2>/dev/tty)
     [ -n "$dir" ] && cd "$dir"
 }'
 
 # Fish
 FISH_FUNC='function cdg
-    set dir ( ~/.local/bin/cdg-bin 2>/dev/tty )
+    set dir (~/.local/bin/cdg-bin $argv 2>/dev/tty)
     if test -n "$dir"
         cd "$dir"
     end
 end'
 
 # Nushell
-NU_FUNC='def cdg [] {
-    let dir = (~/.local/bin/cdg-bin | str trim)
+NU_FUNC='def --env cdg [...args] {
+    let dir = (^~/.local/bin/cdg-bin ...$args | str trim)
     if $dir != "" { cd $dir }
 }'
 
 # Elvish
-ELV_FUNC='fn cdg {
-    var dir = ( ~/.local/bin/cdg-bin )
+ELV_FUNC='fn cdg [@args]{
+    var dir = (~/.local/bin/cdg-bin $@args 2>/dev/tty | slurp)
+    set dir = (str:trim-space $dir)
     if (not-eq $dir "") { cd $dir }
 }'
 
@@ -90,7 +91,7 @@ fi
 
 # Nushell
 if [ -f "$HOME/.config/nushell/config.nu" ]; then
-    if ! grep -qs "def cdg" "$HOME/.config/nushell/config.nu"; then
+    if ! grep -qs "def --env cdg" "$HOME/.config/nushell/config.nu"; then
         echo "$NU_FUNC" >> "$HOME/.config/nushell/config.nu"
         echo "Added cdg to nushell config"
     else
