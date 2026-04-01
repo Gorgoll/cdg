@@ -13,8 +13,17 @@ $functionName = "cdg"
 
 $functionCode = @"
 function cdg {
-    `$dir = (& "$env:LOCALAPPDATA\cdg\cdg.exe").Trim()
-    if (`$dir) { Set-Location `$dir }
+    `$dir = & "$env:LOCALAPPDATA\cdg\cdg.exe" @Args
+
+    if (`$dir -is [array]) {
+        `$dir = `$dir[0]
+    }
+    if(`$dir){
+        `$dir = `$dir.Trim()
+        if (Test-Path `$dir) {
+            Set-Location `$dir
+        }
+    }
 }
 "@
 # if profile exist append if not create new one or somthing like that i hate powershell :>

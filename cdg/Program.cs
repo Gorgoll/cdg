@@ -70,7 +70,7 @@ class Program
         switch (args[0])
         {
             case "-h":
-                Console.WriteLine(@"
+                Console.Error.WriteLine(@"
 Usage: cdg [options]
 
 Options:

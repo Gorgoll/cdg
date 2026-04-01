@@ -59,6 +59,15 @@ cdg
 
 ---
 
+Cdg [options]
+
+| Key   | Action |
+|-------|--------|
+| -h    | Help menu |
+| -b name | Bookmark current directory |
+| -b    | List all bookmarks |
+| name  | Jump to a bookmarked directory |
+---
 ## Manual Installation
 
 1. Download the binary for your platform from the [releases page](https://github.com/Gorgoll/cdg/releases/latest).
@@ -67,9 +76,9 @@ cdg
 
 **bash/zsh** (`~/.bashrc` or `~/.zshrc`):
 ```bash
-cdg() {
+cdg(){
     local dir
-    dir=$(~/.local/bin/cdg-bin 2>/dev/tty)
+    dir=$(~/.local/bin/cdg-bin "$@" 2>/dev/tty)
     [ -n "$dir" ] && cd "$dir"
 }
 ```
@@ -77,8 +86,17 @@ cdg() {
 **PowerShell** (your PowerShell profile):
 ```powershell
 function cdg {
-    $dir = (& "$env:LOCALAPPDATA\cdg\cdg.exe").Trim()
-    if ($dir) { Set-Location $dir }
+    $dir = & "$env:LOCALAPPDATA\cdg\cdg.exe" @Args
+
+    if ($dir -is [array]) {
+        $dir = $dir[0]
+    }
+    if($dir){
+        $dir = $dir.Trim()
+        if (Test-Path $dir) {
+            Set-Location $dir
+        }
+    }
 }
 ```
 
