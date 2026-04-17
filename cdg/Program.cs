@@ -70,19 +70,19 @@ class Program
         switch (args[0])
         {
             case "-h":
-                Console.Error.WriteLine(@"
-Usage: cdg [options]
-
-Options:
-    -h            Help menu
-    -b <name>     Bookmark current directory
-    -b            List all bookmarks
-    <name>        Jump to a bookmarked directory
-
-Example:
-    cdg -b photos
-    cdg photos
-");
+                Console.WriteLine("######################################################");
+                Console.WriteLine("Usage: cdg [options]                                 #");
+                Console.WriteLine("                                                     #");
+                Console.WriteLine("Options:                                             #");
+                Console.WriteLine("    -h              Help menu                        #");
+                Console.WriteLine("    -b <name>       Bookmark current directory       #");
+                Console.WriteLine("    -b              List all bookmarks               #");
+                Console.WriteLine("    <name>          Jump to a bookmarked directory   #");
+                Console.WriteLine("                                                     #");
+                Console.WriteLine("Example:                                             #");
+                Console.WriteLine("     cdg -b photos                                   #");
+                Console.WriteLine("     cdg photos                                      #");
+                Console.WriteLine("######################################################");
                 Environment.Exit(0);
                 break;
 
