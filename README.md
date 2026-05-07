@@ -28,7 +28,8 @@ This will:
 
 ### Windows
 ```powershell
-irm https://raw.githubusercontent.com/Gorgoll/cdg/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/Gorgoll/cdg/main/install.ps1 | iex;
+. $PROFILE
 ```
 
 This will:
